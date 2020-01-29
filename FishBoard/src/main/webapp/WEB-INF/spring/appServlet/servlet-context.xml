@@ -23,6 +23,7 @@
 	
 	<context:component-scan base-package="com.gmail.fishondesert" />
 	
-	
+	<!-- Controller가 처리하지 못하는 요청은 WAS가 처리하도록 설정 -->
+	<default-servlet-handler/>
 	
 </beans:beans>
