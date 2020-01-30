@@ -40,13 +40,13 @@
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- 데이터베이스 사용 시 로그 출력을 자세히 하기 위해 사용하는 라이브러리 -->
+		<!-- 데이터베이스 사용 시 로그 출력을 자세히 하기 위해 사용하는 라이브러리 
 		<dependency>
 			<groupId>org.bgee.log4jdbc-log4j2</groupId>
 			<artifactId>log4jdbc-log4j2-jdbc4</artifactId>
 			<version>1.16</version>
 		</dependency>
-		
+		-->
 	
 		<!-- Spring -->
 		<dependency>
