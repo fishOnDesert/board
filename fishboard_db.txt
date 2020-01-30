@@ -1,0 +1,13 @@
+create table fishuser(
+	email varchar(50) primary key, 
+	pw varchar(100) not null, 
+	nickname varchar(100) not null, 
+	image varchar(1000)
+);
+
+select * from fishuser;
+
+insert into fishuser(email, pw, nickname, image) 
+values('fish@gmail.com', '1234', '물고기', 'default.png');
+
+commit;
