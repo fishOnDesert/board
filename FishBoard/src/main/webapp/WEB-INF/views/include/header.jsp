@@ -30,3 +30,13 @@
 		</header>
 	</div>
 
+	<aside class="main-sidebar">
+		<section class="sidebar">
+			<ul class="nav nav-tabs">
+				<li role="presentation" class="active"><a href="/">메인</a></li> <!-- 어느 페이지에서든 /로 쓰면 메인으로 감 -->
+				<li role="presentation"><a href="/user/signUp">회원가입 </a></li>
+									
+			</ul>
+		</section>
+	</aside>
+
