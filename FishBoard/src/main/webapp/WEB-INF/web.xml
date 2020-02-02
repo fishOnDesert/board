@@ -10,6 +10,7 @@
 		<location>/WEB-INF/views/error/code404.jsp</location>
 	</error-page>
 	
+	
 	<!-- 파라미터 인코딩 설정을 위한 필터 등록 -->
 	<filter>
 		<filter-name>encoding</filter-name>
