@@ -28,9 +28,7 @@
 	</filter-mapping>
 	
 	
-	<!-- 프로젝트 전체에서 사용할 bean을 생성할 파일의 경로 설정 
-		WEB-INF 디렉토리의 applicationContext.xml 파일의 내용을 공유 객체로 사용합니다.
-		경로를 변경하고자 할 때는 web.xml 파일에 context-param 태그를 추가  -->
+	<!-- 프로젝트 전체에서 사용할 bean을 생성할 파일의 경로 설정 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
@@ -54,4 +52,8 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-</web-app>
+	<!-- 5분동안 세션에 아무일도 없으면 세션이 초기화 되도록 해주는 옵션 설정 -->
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+	</web-app>

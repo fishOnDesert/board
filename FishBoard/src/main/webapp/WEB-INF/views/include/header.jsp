@@ -41,8 +41,25 @@
 		<section class="sidebar">
 			<ul class="nav nav-tabs">
 				<li role="presentation" class="active"><a href="/">메인</a></li> <!-- 어느 페이지에서든 /로 쓰면 메인으로 감 -->
-				<li role="presentation"><a href="/user/signUp">회원가입 </a></li>
-									
+				<li role="presentation"><a href="/board/list">목록보기 </a></li>
+					
+				<c:if test="${user == null }">
+					<li role="presentation"><a href="/user/login">로그인 </a></li>
+					<li role="presentation"><a href="/user/signUp">회원가입 </a></li>
+				</c:if>
+				<c:if test="${user != null }">
+					<li role="presentation"><a href="/board/register">게시물 쓰기 </a></li>
+		
+					<div align="right">
+							<span class="badge"> 
+								<img src="/userimage/${user.image}" width="30px" />
+							</span> 
+							Welcome! ${user.nickname}&nbsp;&nbsp; 
+							<a href="user/logout"> Logout </a>
+							<a>&nbsp;&nbsp;</a>
+						</div>
+				</c:if>
+				
 			</ul>
 		</section>
 	</aside>
