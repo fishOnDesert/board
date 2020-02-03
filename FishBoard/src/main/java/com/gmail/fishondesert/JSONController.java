@@ -29,4 +29,12 @@ public class JSONController {
 		return map;
 	}
 	
+	@RequestMapping(value="user/nicknamecheck", method=RequestMethod.GET)
+	public Map<String, Object> nicknamecheck(@RequestParam("nickname") String nickname){
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		String result = userService.nicknamecheck(nickname);
+		map.put("result", result == null);
+		return map;
+	}
+	
 }
