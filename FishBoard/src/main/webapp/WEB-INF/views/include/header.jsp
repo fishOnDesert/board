@@ -16,12 +16,7 @@
 <!-- 부트스트랩을 사용하기 위한 설정 -->
 <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet"
 	type="text/css" />
-<!-- IE9 이하 버전에서 접속했을 때 HTML5의 semantic 태그를 인식하도록 하는 설정
-조금 후부터는 이 설정을 안 해도 됨 -->
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.comrespond/1.4.2respond.min.js"></script>
-<![endif ]-->
+
 
 </head>
 <!-- jQuery 2.1.4 -->
@@ -48,7 +43,7 @@
 					<li role="presentation"><a href="/user/signUp">회원가입 </a></li>
 				</c:if>
 				<c:if test="${user != null }">
-					<li role="presentation"><a href="/board/register">게시물 쓰기 </a></li>
+					<li role="presentation"><a href="/board/addPost">게시물 쓰기 </a></li>
 		
 					<div align="right">
 							<span class="badge"> 

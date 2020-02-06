@@ -5,7 +5,8 @@
 <section class="content">
 	<div class="box">
 		<div class="box-header with-border">
-			<a href="user/signUp"><h3 class="box-title">회원가입</h3></a>
+		
+			<h3>메인페이지</h3>
 		</div>
 	</div>
 </section>
