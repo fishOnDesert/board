@@ -9,5 +9,89 @@
 			values(#{title}, #{content}, #{ip}, #{email})
 		</insert>
 		
+		<!-- 동적 SQL : 다른 SQL에 포함시켜서 사용 -->
+		<sql id="search">
+			<if test = "searchType != null">
+				<if test = "searchType == 'n'.toString()">
+					where b.email = u.email
+				</if>
+				<!-- title에 keyword가 포함된 -->
+				<if test = "searchType == 't'.toString()">
+					where b.email = u.email 
+					and title like '%' || #{keyword} ||'%'
+				</if>
+				<!-- content에 keyword가 포함된 -->
+				<if test = "searchType == 'c'.toString()">
+					where b.email = u.email 
+					and content like '%' || #{keyword} ||'%'
+				</if>
+				
+				<!-- nickname에 keyword가 포함된 -->
+				<if test = "searchType == 'w'.toString()">
+					where b.email = u.email 
+					and b.email like '%' || #{keyword} ||'%'
+				</if>
+				<!-- title 또는 content에 keyword가 포함된 -->
+				<if test = "searchType == 'tc'.toString()">
+					where b.email = u.email 
+					and (title like '%' || #{keyword} || '%'
+					or content like '%' || #{keyword} || '%')
+				</if>
+			</if>
+			<if test="searchType == null">
+				where b.email=u.email
+			</if>
+		</sql>
+		
+				
+		<!-- 전체 데이터 개수를 가져오는 SQL -->
+		<select id="totalCount" resultType="java.lang.Integer" parameterType="SearchCriteria">
+			select count(*)
+			from fishboard b, fishuser u
+			<include refid="search"></include>
+		</select>
+		
+		<!-- 전체목록을 가져오는 SQL -->
+		<select id="list" resultType="Board">
+			select bno, title, nickname, regdate, readcnt, u.email from fishuser u, fishboard b
+			where u.email = b.email 
+			order by updatedate desc
+		</select>
+		
+
+		<!-- 게시물 목록 보기를 위한 SQL - 페이징 처리 추가 
+		updatedate별로 내림차순 정렬해서 Criteria가 가진 pageStart부터 pageStart + perPageNum - 1까지 가져오기 
+		<select id="list" resultType="Board" parameterType="SearchCriteria">
+			select bno, title, regdate, readcnt, nickname, email
+			from (select rownum rnum, bno, title, regdate, readcnt, nickname, email 
+				 from(select bno, title, regdate, readcnt, nickname, b.email
+				 		from fishboard b, fishuser u 
+				 		<include refid="search"></include>
+				 		order by updatedate desc))
+			where rnum &gt;= #{pageStart} and rnum &lt;= #{pageStart} + #{perPageNum} - 1
+		</select>
+		-->
+		
+		<!-- 글번호로 하나의 데이터를 가져오는 SQL -->
+		<select id="detail" parameterType="java.lang.Integer" resultType="Board">
+			select bno, title, content, regdate, readcnt, updatedate, ip, nickname, u.email
+			from fishuser u, fishboard b
+			where u.email=b.email and bno=#{bno}
+		</select>
+		
+		<!-- 글번호에 해당하는 데이터를 조회수 1 증가 시키는 SQL -->
+		<update id="updatereadcnt" parameterType="java.lang.Integer">
+			update fishboard
+			set readcnt = readcnt + 1
+			where bno = #{bno}
+		</update>
+		
+		<!-- 글번호로 데이터를 삭제하는 SQL -->
+		<delete id="delete" parameterType="java.lang.Integer">
+			delete from fishboard
+			where bno = #{bno}
+		</delete>
+
+		
 		
 	</mapper>
