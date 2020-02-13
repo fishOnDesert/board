@@ -92,6 +92,11 @@
 			where bno = #{bno}
 		</delete>
 
-		
+		<!-- 글번호로 데이터를 수정하는 SQL -->
+		<update id="update" parameterType="Board">
+			update fishboard
+			set title=#{title}, content=#{content}, ip=#{ip}, updatedate=sysdate
+			where bno = #{bno}
+		</update>
 		
 	</mapper>

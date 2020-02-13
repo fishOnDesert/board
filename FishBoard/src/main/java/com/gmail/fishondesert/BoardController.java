@@ -93,5 +93,24 @@ System.out.println("6디버깅-map:" + map);
 		}
 	}
 	
+	@RequestMapping(value = "update/{bno}", method = RequestMethod.GET)
+	public String update(@PathVariable("bno") int bno, Model model) {
+		Board board = boardService.detail(bno);
+		model.addAttribute("vo", board);
+		return "board/update";
+	}
+	
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	// 파라미터 객체로 클래스 이름을 이용 - Command 객체
+	public String update(Board board, Model model, RedirectAttributes attr) {
+		int result = boardService.update(board);
+		if (result > 0) {
+			attr.addFlashAttribute("msg", "수정성공");
+			return "redirect:/board/list";
+		} else {
+			return "redirect:/board/update";
+		}
+	}
+	
 	
 }

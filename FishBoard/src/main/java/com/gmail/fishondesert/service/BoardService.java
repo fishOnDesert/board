@@ -25,6 +25,11 @@ public interface BoardService {
 	//게시글 삭제를 위한 메소드 
 	public int delete(int bno);
 	
+	//게시글 수정을 위한 메소드 
+	public Board updateView(int bno);
+	
+	//게시글 수정을 위한 메소드
+	public int update(Board board);
 
 
 }

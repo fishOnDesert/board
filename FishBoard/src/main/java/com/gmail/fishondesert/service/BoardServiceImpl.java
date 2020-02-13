@@ -75,7 +75,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		for(Board board : list) {
 			String regdate = board.getRegdate().toString();
-
+			board.setTitle(board.getTitle().trim());
 			if (today.toString().equals(regdate.substring(0, 10))) {
 				board.setDispdate(regdate.substring(11, 16));
 			} else {
@@ -103,6 +103,24 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int delete(int bno) {
 		return boardDao.delete(bno);
+	}
+
+
+	@Override
+	public Board updateView(int bno) {
+		Board board = null;
+		board = boardDao.detail(bno);
+		if (board != null) {
+			board.setTitle(board.getTitle().trim());
+		}
+		return board;
+	}
+
+
+
+	@Override
+	public int update(Board board) {
+		return boardDao.update(board);
 	}
 
 /*
