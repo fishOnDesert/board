@@ -1,10 +1,16 @@
 package com.gmail.fishondesert.service;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -105,6 +111,67 @@ public class UserServiceImpl implements UserService {
 			System.out.println(e.getMessage());
 		}
 		return user;
+	}
+
+	@Override
+	public String convertAddress(String param) {
+		String address = null; 
+		
+		//파라미터 읽기 
+		//param의 구성 - latitude:longitude
+		String [] coords = param.split(":");
+		String latitude = coords[0];
+		String longitude = coords[1];
+		//데이터를 다운로드 받을 URL을 생성 
+		String addr = "https://dapi.kakao.com/v2/local/geo/coord2address.json?x="
+				+ longitude + "&y=" 
+				+ latitude + "&input_coord=WGS84";
+		//다운로드 받은 문자열을 저장할 객체 
+		StringBuilder sb = new StringBuilder(); 
+		try {
+			//다운로드 받을 주고를 URL 객체로 생성 
+			URL url = new URL(addr); 
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.setConnectTimeout(30000);
+			con.setUseCaches(false);
+			con.addRequestProperty("Authorization", "KakaoAK 21a9071667119f1741d1811d0749ef7c");
+			
+			//스트림 가져오기 
+			InputStreamReader isr = new InputStreamReader(con.getInputStream());
+			BufferedReader br = new BufferedReader(isr);
+			//문자열을 읽어서 sb에 저장 
+			while(true) {
+				String line = br.readLine();
+				if(line == null) {
+					break;
+				}
+				sb.append(line);
+			}
+			String json = sb.toString();
+			//카카오에서 주는 데이터의 시작이 {이므로 JSON 객체로 변환
+			JSONObject root = new JSONObject(json);
+//디버깅2. 
+System.out.println("디버깅2-root:" + root);
+			
+			JSONArray documents = root.getJSONArray("documents");
+			if(documents.length() > 0) {
+				JSONObject first = documents.getJSONObject(0);
+//디버깅3.
+System.out.println("디버깅3-documents:" + documents);
+			JSONObject roadaddress = first.getJSONObject("road_address");
+//디버깅4. 
+System.out.println("디버깅4-roadaddress:" + roadaddress);
+			address = roadaddress.getString("address_name");
+//디버깅5. 
+System.out.println("address:" + address);
+			}
+			isr.close();
+			br.close();
+			con.disconnect();
+		}catch(Exception e) {
+			System.out.println("주소 가져오기 에러:" + e.getMessage());
+		}
+		return address;
 	}
 
 

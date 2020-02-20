@@ -29,6 +29,7 @@ public class JSONController {
 		return map;
 	}
 	
+	//nickname 중복검사 요청을 처리하는 메소드
 	@RequestMapping(value="user/nicknamecheck", method=RequestMethod.GET)
 	public Map<String, Object> nicknamecheck(@RequestParam("nickname") String nickname){
 		Map<String, Object> map = new HashMap<String, Object>(); 
@@ -36,5 +37,15 @@ public class JSONController {
 		map.put("result", result == null);
 		return map;
 	}
+	
+	//위도와 경도 문자열을 받아서 주소를 리턴하는 요청을 처리하는 메소드
+	@RequestMapping(value = "address", method = RequestMethod.GET)
+	public Map<String, String> address(@RequestParam("param") String param) {
+		Map<String, String> map = new HashMap<>();
+		String address = userService.convertAddress(param);
+		map.put("address", address);
+		return map;
+	}
+	
 	
 }

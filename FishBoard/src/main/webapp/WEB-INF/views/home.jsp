@@ -3,14 +3,43 @@
 	
 <%@include file="include/header.jsp"%>
 <section class="content">
-	<div class="box">
-		<div class="box-header with-border">
+	<div class="box" align="center">
 		
-			<h3>메인페이지</h3>
+		
+		<h3>메인페이지</h3>
+		현재 위치:
+		<!-- 주소 불러오는 영역 -->
+		<div class="box-header with-border" id="addressdisp" align="center">
+		</div>
 		</div>
 	</div>
 </section>
 <%@include file="include/footer.jsp"%>
+
+<script>
+	
+<%-- 30초를 주기로 동작을 수행하는 타이머 생성 --%>
+	setInterval(function() {
+	<%-- 현재 위치 정보를 가져오기 위한 HTML5 API  --%>
+	navigator.geolocation.getCurrentPosition(function(position) {
+			var coords = position.coords;
+			<%-- 위도와 경도를 하나의 문자열로 생성 --%>
+			var param = coords.latitude + ":" + coords.longitude;
+			<%-- jquery에서 ajax 요청 --%>
+			$.ajax({
+				url : "address",
+				data : {
+					"param" : param
+				},
+				dataType : "json",
+				success : function(data) {
+					document.getElementById("addressdisp").innerHTML = data.address
+				}
+			});
+		});
+	}, 10000);
+</script>
+
 
 <c:if test="${insert != null }">
 	<link rel="stylesheet"

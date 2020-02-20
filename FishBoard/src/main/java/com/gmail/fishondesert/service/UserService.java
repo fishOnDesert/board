@@ -19,4 +19,7 @@ public interface UserService {
 	
 	//로그인 처리를 위한 메소드 
 	public User login(HttpServletRequest request);
+	
+	//위도와 경도 문자열을 받아서 주소를 리턴하는 메소드
+	public String convertAddress(String param);
 }
